@@ -8,4 +8,3 @@ def main():
 
     for l in sys.stdin:
         l = l.strip()
-        for ch
