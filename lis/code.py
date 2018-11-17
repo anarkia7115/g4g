@@ -12,7 +12,23 @@ def pretty_print_list(arr):
         print()
 
 
-def lis(arr):
+def lis(A):
+    L = []
+    for i in range(len(A)):
+        # init max size of LIS
+        max_l = 0
+        for j in range(i):
+            # check if can be appended
+            if A[i] > A[j]:
+                if L[j] > max_l:  # find longer LIS
+                    # record size
+                    max_l = L[j]
+        L.append(max_l + 1)
+
+    return max(L)
+
+
+def lis_way1(arr):
     """
     build program with 2 rules:
     1. same length, choose the smaller right edge
