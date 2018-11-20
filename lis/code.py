@@ -12,7 +12,8 @@ def pretty_print_list(arr):
         print()
 
 
-def lis(A):
+def lis_o2(A):
+    # time complicity O(N^2) > O(N log N)?
     L = []
     for i in range(len(A)):
         # init max size of LIS
@@ -28,7 +29,7 @@ def lis(A):
     return max(L)
 
 
-def lis_way1(arr):
+def lis(arr):
     """
     build program with 2 rules:
     1. same length, choose the smaller right edge
@@ -55,35 +56,32 @@ def lis_way1(arr):
     :return:
     """
     N = len(arr)
-    cand_list = [[]]
+    # cand_list = [[]]
+    cand_end_list = [-1]
     for i in range(N):
         curr_num = arr[i]
-        for j in range(len(cand_list)):
-            cand = cand_list[j]
-            if len(cand) == 0:
-                r_c = -1
-            else:
-                r_c = cand[-1]
-            if curr_num > r_c:
+        for j in range(len(cand_end_list)):
+            ce = cand_end_list[j]
+            if curr_num > ce:
                 # check if has next_cand,
                 # if has next_cand, compare right_edge
-                if j+1 < len(cand_list):
-                    next_cand = cand_list[j+1]
-                    r_nc = next_cand[-1]
+                if j+1 < len(cand_end_list):
+                    next_cand = cand_end_list[j+1]
+                    n_ce = next_cand
                     # if is a better choice, substitute
-                    if curr_num < r_nc:
-                        new_next_cand = cand + [curr_num]
-                        cand_list[j+1] = new_next_cand
+                    if curr_num < n_ce:
+                        new_next_ce = curr_num
+                        cand_end_list[j+1] = new_next_ce
                 else:
                     # else append new_next_cand to cand_list
-                    new_next_cand = cand + [curr_num]
-                    cand_list.append(new_next_cand)
+                    new_next_ce = curr_num
+                    cand_end_list.append(new_next_ce)
 
     # pretty_print_list(arr)
     # print("longest lis:")
     # pretty_print_list(cand_list[-1])
     # first result is empty
-    return len(cand_list) - 1
+    return len(cand_end_list) - 1
 
 
 def lis_err(arr):
