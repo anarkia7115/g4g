@@ -20,19 +20,17 @@ def insertinBST(root:Node, node:Node):
     r = root.right
     val = node.data
     if val < root.data:
-        root.left = node
         if l is not None:
-            if val < l.data:
-                node.right = l
-            else:
-                node.left = l
-    else:
-        root.right = node
+            insertinBST(l, node)
+        else:
+            root.left = node
+    elif val > root.data:
         if r is not None:
-            if val > r.data:
-                node.left = r
-            else:
-                node.right = r
+            insertinBST(r, node)
+        else:
+            root.right = node
+    else:
+        pass
     return root
 
 
