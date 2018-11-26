@@ -1,4 +1,3 @@
-{
 #include<bits/stdc++.h>
 using namespace std;
 struct Node
@@ -84,7 +83,7 @@ bool I_(Node* root)
  
         return I_(root->right);
     }
- 
+
     return true;
 }
 Node* insertToAVL(Node* Node, int data);
@@ -147,8 +146,6 @@ while(t--)
 return 0;
 }
 
-}
-
 /*Please note that it's Function problem i.e.
 you need to write your solution in the form of Function(s) only.
 Driver Code to call/invoke your function is mentioned above.*/
@@ -165,5 +162,26 @@ struct Node
 /*You are required to complete this method */
 Node* insertToAVL( Node* node, int data)
 {
+    /*
+    insert to AVL
+    1. normal B-Tree insertion
+    2. find the first unbalanced node
+    3. record fstSide, sndSide
+    4. rotate
+    */
     //Your code here
+    // Normal B-Tree insertion
+    if (node == NULL) {  // if empty Tree
+        node->data = data;
+    } else {  // insert left or right
+        if (data <= node->data) {  // go left
+            node->left = \
+                insertToAVL(node->left, data);
+        } else {  // go right
+            node->right = \
+                insertToAVL(node->right, data);
+        }
+    }
+    // find first unbalanced node
+    return node;
 }
