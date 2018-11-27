@@ -1,2 +1,2 @@
 all:
-	g++ ./insert.cpp -o insert
+	g++ -g ./insert.cpp -o insert

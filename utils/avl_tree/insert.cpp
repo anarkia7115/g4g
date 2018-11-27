@@ -7,6 +7,7 @@ struct Node
     struct Node *right;
     int height;
 };
+void traverse(Node* root);
 int heigh(struct Node* Node)
 {
    /* base case tree is empty */
@@ -117,11 +118,14 @@ while(t--)
         cin>>k;
         a.push_back(k);
         root = insertToAVL(root,k);
-        if(!isBalanced(root)){
-            f=false;
-            break;
-        }
+//        if(!isBalanced(root)){
+//            f=false;
+//            break;
+//        }
     }
+    // traverse
+    traverse(root);
+    cout << endl;
     
     z.clear();
     
@@ -139,9 +143,9 @@ while(t--)
     }
     }
     if(f)
-        cout<<1<<endl;
+        cout<<"in order"<<endl;
     else 
-        cout<<0<<endl;
+        cout<<"dis order"<<endl;
 }
 return 0;
 }
@@ -172,7 +176,9 @@ Node* insertToAVL( Node* node, int data)
     //Your code here
     // Normal B-Tree insertion
     if (node == NULL) {  // if empty Tree
+        Node* node = new Node();
         node->data = data;
+        return node;
     } else {  // insert left or right
         if (data <= node->data) {  // go left
             node->left = \
@@ -184,4 +190,16 @@ Node* insertToAVL( Node* node, int data)
     }
     // find first unbalanced node
     return node;
+}
+
+void traverse(Node* root) {
+    if (root->left != NULL) {
+        traverse(root->left);
+    }
+
+    cout << root->data << ", ";
+
+    if (root->right != NULL) {
+        traverse(root->right);
+    }
 }
