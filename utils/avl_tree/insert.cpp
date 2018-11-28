@@ -74,7 +74,7 @@ bool I_(Node* root)
      
     if (root)
     {
-        if (!I_(root->left))
+        if (!I_(root->left))  // left is null or meet the following condition
           return false;
  
         if (prev != NULL && root->data <= prev->data)
@@ -118,14 +118,15 @@ while(t--)
         cin>>k;
         a.push_back(k);
         root = insertToAVL(root,k);
-//        if(!isBalanced(root)){
-//            f=false;
-//            break;
-//        }
+        if(!isBalanced(root)){
+            f=false;
+            break;
+        }
     }
+//    cout << "I_:" << I_(root) << endl;
     // traverse
     traverse(root);
-    cout << endl;
+//    cout << endl;
     
     z.clear();
     
