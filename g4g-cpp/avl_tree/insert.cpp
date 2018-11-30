@@ -62,12 +62,16 @@ struct Node* findUnbalanced(struct Node *root, int target)
     /* Get the height of left and right sub trees */
     lh = heigh(curr->left);
     rh = heigh(curr->right);
+    curr->left->height = lh;
+    curr->right->height = rh;
 
     /* find unbalanced node */
     while(abs(lh-rh) <= 1) {
         curr = step_goto(curr, target);
         lh = heigh(curr->left);
         rh = heigh(curr->right);
+        curr->left->height = lh;
+        curr->right->height = rh;
     }
     /* now curr is the unbalanced node */
     struct Node* w = curr;
@@ -125,6 +129,8 @@ bool I_(Node* root)
 
     return true;
 }
+Node* rotateNode(Node* node, const string& mode);
+Node* balanceNode(Node* z, Node* y, Node* x, const string& mode);
 Node* insertToAVL(Node* node, int data);
 vector<int> z;
 void inorder(Node *root)
@@ -201,7 +207,44 @@ struct Node
     Node *right;
     int height;
 };
+
+
 */
+Node* rotateNode(Node* node, const string& mode) {
+    if (mode == "r") {
+        /* ll condition */
+        Node* z = node;
+        Node* y = z->left;
+        Node* t3 = y->right;
+        y->right = z;
+        z->left = t3;
+        return y;
+    } else {  // mode == "l"
+        Node* z = node;
+        Node* y = z->right;
+        Node* t2 = y->left;
+        y->left = z;
+        z->right = t2;
+        return y;
+    }
+}
+Node* balanceNode(Node* z, Node* y, Node* x, const string& mode) {
+   if (mode == "ll") {
+       z = rotateNode(z, 'r');
+   } else if (mode == "lr") {
+       y = rotateNode(y, 'l');
+       z->left = y;
+       z = rotateNode(z, 'r');
+   } else if (mode == "rl") {
+       z = rotateNode(z, 'l');
+   } else if (mode == "rr") {
+       y = rotateNode(y, 'r');
+       z->right = y;
+       z = rotateNode(z, 'l');
+   }
+   return z;
+}
+
 /*You are required to complete this method */
 Node* insertToAVL( Node* node, int data)
 {
@@ -215,12 +258,8 @@ Node* insertToAVL( Node* node, int data)
     //Your code here
     // Normal B-Tree insertion
     if (node == nullptr) {  // if empty Tree
-        Node* new_node = new Node();
-        new_node->data = data;
-        /* TODO: try to understand pointer assignment here
-         * Does NULL Pointer has an address? */
-        node = new_node;
-//        return new_node;
+        node = new Node();
+        node->data = data;
     } else {  // insert left or right
         if (data <= node->data) {  // go left
             node->left = \
@@ -231,8 +270,21 @@ Node* insertToAVL( Node* node, int data)
         }
     }
     // find first unbalanced node
-    struct Node* w = findUnbalanced(node, data);
-    /* TODO: step_goto return left right? for the rotate strategy */
+    struct Node* z = findUnbalanced(node, data);
+    if (z == nullptr) {
+        // no unbalanced node found
+        return node;
+    }
+    /* check height of following node */
+    if (data > z->data) {
+        struct Node* y = w->right;
+        /* right */
+        if (data > y->data) {
+            struct Node* x = y->right;
+            /* right */
+            rotate()
+        }
+    } else
     return node;
 }
 
