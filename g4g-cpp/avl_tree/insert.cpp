@@ -62,24 +62,19 @@ struct Node* findUnbalanced(struct Node *root, int target)
     /* Get the height of left and right sub trees */
     lh = heigh(curr->left);
     rh = heigh(curr->right);
-    curr->left->height = lh;
-    curr->right->height = rh;
 
-    /* find unbalanced node */
-    while(abs(lh-rh) <= 1) {
-        curr = step_goto(curr, target);
-        lh = heigh(curr->left);
-        rh = heigh(curr->right);
+    if (lh > 0) {
         curr->left->height = lh;
+    }
+    if (rh > 0) {
         curr->right->height = rh;
     }
-    /* now curr is the unbalanced node */
-    struct Node* w = curr;
-//    curr = step_goto(curr, target);
-//    struct Node* y = curr;
-//    curr = step_goto(curr, target);
-//    struct Node* x = curr;
-    return w;
+
+    if (abs(lh-rh) > 1) {
+        return curr;
+    }
+    curr = step_goto(curr, target);
+    return findUnbalanced(curr, target);
 }
 
 /* UTILITY FUNCTIONS TO TEST isBalanced() FUNCTION */
@@ -129,8 +124,8 @@ bool I_(Node* root)
 
     return true;
 }
-Node* rotateNode(Node* node, const string& mode);
-Node* balanceNode(Node* z, Node* y, Node* x, const string& mode);
+void rotateNode(Node* z, const string& mode);
+void balanceNode(Node* z, Node* y, Node* x, const string& mode);
 Node* insertToAVL(Node* node, int data);
 vector<int> z;
 void inorder(Node *root)
@@ -162,10 +157,10 @@ int main()
             cin>>k;
             a.push_back(k);
             root = insertToAVL(root,k);
-//            if(!isBalanced(root)){
-//                f=false;
-//                break;
-//            }
+            if(!isBalanced(root)){
+                f=false;
+                break;
+            }
         }
 //    cout << "I_:" << I_(root) << endl;
         // traverse
@@ -188,9 +183,9 @@ int main()
             }
         }
         if(f)
-            cout<<"in order"<<endl;
+            cout<<"True"<<endl;
         else
-            cout<<"dis order"<<endl;
+            cout<<"False"<<endl;
     }
     return 0;
 }
@@ -210,39 +205,52 @@ struct Node
 
 
 */
-Node* rotateNode(Node* node, const string& mode) {
+void rotateNode(Node* z, const string& mode) {
     if (mode == "r") {
         /* ll condition */
-        Node* z = node;
-        Node* y = z->left;
+        Node* zCopy = new Node();
+        zCopy->left = z->left;
+        zCopy->right = z->right;
+        zCopy->data = z->data;
+
+        Node* y = zCopy->left;
         Node* t3 = y->right;
-        y->right = z;
-        z->left = t3;
-        return y;
+
+        y->right = zCopy;
+        zCopy->left = t3;
+
+        z->left = y->left;
+        z->right = y->right;
+        z->data = y->data;
     } else {  // mode == "l"
-        Node* z = node;
-        Node* y = z->right;
+        Node* zCopy = new Node();
+        zCopy->left = z->left;
+        zCopy->right = z->right;
+        zCopy->data = z->data;
+
+        Node* y = zCopy->right;
         Node* t2 = y->left;
-        y->left = z;
-        z->right = t2;
-        return y;
+
+        y->left = zCopy;
+        zCopy->right = t2;
+
+        z->left = y->left;
+        z->right = y->right;
+        z->data = y->data;
     }
 }
-Node* balanceNode(Node* z, Node* y, Node* x, const string& mode) {
+void balanceNode(Node* z, Node* y, Node* x, const string& mode) {
    if (mode == "ll") {
-       z = rotateNode(z, 'r');
+       rotateNode(z, "r");
    } else if (mode == "lr") {
-       y = rotateNode(y, 'l');
-       z->left = y;
-       z = rotateNode(z, 'r');
+       rotateNode(y, "l");
+       rotateNode(z, "r");
    } else if (mode == "rl") {
-       z = rotateNode(z, 'l');
+       rotateNode(z, "l");
    } else if (mode == "rr") {
-       y = rotateNode(y, 'r');
-       z->right = y;
-       z = rotateNode(z, 'l');
+       rotateNode(y, "r");
+       rotateNode(z, "l");
    }
-   return z;
 }
 
 /*You are required to complete this method */
@@ -276,15 +284,33 @@ Node* insertToAVL( Node* node, int data)
         return node;
     }
     /* check height of following node */
+    string mode;
+    Node* y;
+    Node* x;
     if (data > z->data) {
-        struct Node* y = w->right;
+        y = z->right;
         /* right */
         if (data > y->data) {
-            struct Node* x = y->right;
-            /* right */
-            rotate()
+            x = y->right;
+            /* right right */
+            mode = "rr";
+        } else {
+            x = y->left;
+            mode = "rl";
         }
-    } else
+    } else {
+        y = z->left;
+        /* right */
+        if (data > y->data) {
+            x = y->right;
+            /* right right */
+            mode = "lr";
+        } else {
+            x = y->left;
+            mode = "ll";
+        }
+    }
+    balanceNode(z, y, x, mode);
     return node;
 }
 
