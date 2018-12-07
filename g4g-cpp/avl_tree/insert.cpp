@@ -106,7 +106,8 @@ bool isBalanced(struct Node *root)
 
 
 /* ********************** */
-void printBT(const std::string& prefix, const Node* node, bool isLeft)
+void
+(const std::string& prefix, const Node* node, bool isLeft)
 {
     if( node != nullptr )
     {
@@ -160,8 +161,11 @@ struct Node* findUnbalanced(struct Node *root, int target)
     if (abs(lh-rh) > 1) {
         return curr;
     }
-    curr = step_goto(curr, target);
-    return findUnbalanced(curr, target);
+    /* TODO: Do not need to check childs
+     * insertAVL is revursive*/
+//    curr = step_goto(curr, target);
+//    return findUnbalanced(curr, target);
+    return nullptr;
 }
 
 void rotateNode(Node* z, const string& mode) {
