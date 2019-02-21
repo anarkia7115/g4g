@@ -6,7 +6,7 @@ class PathInMatrix(object):
         if self.sum_table[i][j] != -1:
             return self.sum_table[i][j]
 
-    def path_in_matrix(mat):
+    def path_in_matrix(self, mat):
         for row in mat:
             for elem in row:
                 print(elem, end=",")
@@ -17,6 +17,7 @@ def main(f):
     test_case_num = int(f.readline().strip())
     for _ in range(test_case_num):
         mat_dim = int(f.readline().strip())
+        pim = PathInMatrix(mat_dim)
         elem_num = 1
 
         mat = []
@@ -29,7 +30,7 @@ def main(f):
             elem_num += 1
 
         # print(s1, s2, lcs(s1, s2))
-        print(path_in_matrix(mat))
+        print(pim.path_in_matrix(mat))
 
 if __name__ == "__main__":
     # import fileinput
