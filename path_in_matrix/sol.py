@@ -63,9 +63,9 @@ def main(f):
             elem_num += 1
 
         # print(s1, s2, lcs(s1, s2))
-        # pim.print(mat)
+        pim.print(mat)
         print(pim.path_in_matrix(mat))
-        # print(pim.print_intermediate())
+        pim.print_intermediate()
 
 if __name__ == "__main__":
     # import fileinput
