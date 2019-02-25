@@ -19,6 +19,7 @@ class PathInMatrix(object):
             # optimal sum is itself
             return self.assign_sum_table_and_return(i_row, j_col, mat[i_row][j_col])
         sum_candidates = []
+        sum_candidates.append(self.max_sum_at_pos(mat, i_row-1, j_col))
         if j_col - 1 >= 0:
             sum_candidates.append(self.max_sum_at_pos(mat, i_row-1, j_col-1))
         if j_col + 1 < len(mat):
@@ -63,15 +64,15 @@ def main(f):
             elem_num += 1
 
         # print(s1, s2, lcs(s1, s2))
-        pim.print(mat)
+        # pim.print(mat)
         print(pim.path_in_matrix(mat))
-        pim.print_intermediate()
+        # pim.print_intermediate()
 
 if __name__ == "__main__":
-    # import fileinput
-    # f = fileinput.input()
-    # main(f)
+    import fileinput
+    f = fileinput.input()
+    main(f)
 
-    input_file = "./input.txt"
-    with open(input_file, 'r') as f:
-        main(f)
+    # input_file = "./input.txt"
+    # with open(input_file, 'r') as f:
+    #     main(f)
