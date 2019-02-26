@@ -68,6 +68,7 @@ def main(f):
         print(pim.path_in_matrix(mat))
         # pim.print_intermediate()
 
+
 if __name__ == "__main__":
     import fileinput
     f = fileinput.input()
