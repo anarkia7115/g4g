@@ -1,5 +1,6 @@
 class CoinChange(object):
     def __init__(self):
+        # TODO: has duplication, when change orders are different
         self.change_methods_of = dict()
         pass
 
