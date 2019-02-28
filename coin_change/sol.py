@@ -62,6 +62,7 @@ def main(file_handle):
 if __name__ == "__main__":
     import fileinput
     f = fileinput.input()
+    # accepted!
     main(f)
 
     # input_file = "./input.txt"
