@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 *input.txt
 *build/
 *cmake-build-debug/
 venv/
 .idea/
 .vscode/
+=======
+*input.txt
+*build/
+*cmake-build-debug/
+venv/
+.idea/
+.vscode
+>>>>>>> 8166ec0029f8c47d05ede1a36a885154592508fb
