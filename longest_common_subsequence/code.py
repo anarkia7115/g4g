@@ -2,7 +2,7 @@ def lcs(s1, s2):
     """
     a) use a row to record longest 
         match sequence (match_seq, idx:i)
-    b) if e_i == e_j, new_m += m[j-1, i-1]
+    b) if e_i == e_j, new_m += m[j-1, i-1] + 1
        elif new_m = max(m[j-1, i], m[i, j-1])
     c) return m[max_i]
     the longest common sequence of (s1, s2)
@@ -69,5 +69,5 @@ def main(input_file):
 
 
 if __name__ == "__main__":
-    in_file = ".\\longest_common_subsequence\\input.txt"
+    in_file = "./input.txt"
     main(in_file)
